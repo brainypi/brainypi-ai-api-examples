@@ -51,6 +51,22 @@ make
 
 Feel free to explore the different examples in the repository and modify them to suit your specific needs. Each example demonstrates the usage of a specific computer vision task, along with making API requests to the BrainyPi AI REST server.
 
+## Using the OpenAPI Description
+
+If you want to write your own code using the BrainyPi AI REST server API, you can utilize the OpenAPI description provided in the [openapi.yaml](openapi.yaml) file. The OpenAPI description defines the available endpoints, request and response structures, and the supported operations.
+
+To use the OpenAPI description for writing custom code, follow these steps:
+
+1.	Open the [openapi.yaml](openapi.yaml) file in a text editor or an OpenAPI-compatible tool.
+
+2.	Familiarize yourself with the API endpoints, request parameters, and response structures. This information will help you understand how to construct requests and process the server's responses.
+
+3.	Use an OpenAPI code generator or an HTTP client library compatible with OpenAPI specifications to generate code bindings or manually construct the HTTP requests.
+
+4.	Incorporate the generated or manually written code into your project and customize it as needed.
+
+By leveraging the OpenAPI description, you can ensure compatibility and consistency while interacting with the BrainyPi AI REST server API.
+
 ## License
 
 This repository is licensed under the MIT License. Please refer to the [LICENSE](LICENSE) file for more information.

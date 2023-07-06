@@ -1,0 +1,439 @@
+openapi: 3.0.0
+info:
+  title: BrainyPi AI API
+  version: 1.1.0
+  description: >-
+    A simple RESTful API for Computer Vision on BrainyPi.
+  contact:
+    name: ShunyaOs Team <support@shunyaos.org>
+servers:
+  - url: http://127.0.0.1:9900
+    description: BrainyPi AI server
+paths:
+  /v1/detectface:
+    post:
+      summary: >-
+        Detects faces in the given image.
+      requestBody:
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+              maxLength: 1048576
+            example: ''
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    apiVersion: 
+                        type: string
+                    requestId: 
+                        type: integer
+                        format: int32
+                    result: 
+                        type: object
+                        properties: 
+                          faces: 
+                            type: array
+                            items: 
+                              type: object
+                              properties: 
+                                confidence: 
+                                  type: number
+                                  format: float
+                                boundingBox: 
+                                  type: object
+                                  properties: 
+                                    top: 
+                                      type: number
+                                      format: float
+                                    left: 
+                                      type: number
+                                      format: float
+                                    width: 
+                                      type: number
+                                      format: float
+                                    height: 
+                                      type: number
+                                      format: float
+                                landmarks: 
+                                  type: array
+                                  items: 
+                                    type: object
+                                    properties: 
+                                      type: 
+                                        type: string
+                                      x: 
+                                        type: number
+                                        format: float
+                                      y: 
+                                        type: number
+                                        format: float
+              example:
+                   '{"apiVersion":"1.1.0","requestId":1687514443,"result":{"faces":[{"confidence":0.99,"boundingBox":{"top":75.46,"left":59.01,"width":96.16,"height":141.24},"landmarks":[{"type":"pupilLeft","x":100.53,"y":114.02},{"type":"pupilRight","x":100.53,"y":114.02},{"type":"noseTip","x":100.53,"y":114.02},{"type":"mouthLeft","x":100.53,"y":114.02},{"type":"mouthRight","x":100.53,"y":114.02}]}]}}'
+                    
+        '400':
+          description: Bad Request - Invalid image data or Image is not received
+        '406':
+          description: >-
+            Not Acceptable - The requested representation is not acceptable to
+            the client
+        '415':
+          description: >-
+            Unsupported Media Type - The request entity has a media type which
+            the server or resource does not support
+        '429':
+          description: >-
+            Too Many Requests - The user has sent too many requests in a given
+            amount of time
+  /v1/detectobjects:
+    post:
+      summary: >-
+        Detects objects in the given image.
+      requestBody:
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+              maxLength: 1048576
+            example: ''
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    apiVersion: 
+                      type: string
+                    requestId: 
+                      type: integer
+                      format: int32
+                    result: 
+                      type: object
+                      properties: 
+                        objects: 
+                          type: array
+                          items: 
+                            type: object
+                            properties: 
+                              object: 
+                                type: string
+                              confidence: 
+                                type: number
+                                format: float
+                              boundingBox: 
+                                type: object
+                                properties: 
+                                  top: 
+                                    type: number
+                                    format: float
+                                  left: 
+                                    type: number
+                                    format: float
+                                  width: 
+                                    type: number
+                                    format: float
+                                  height: 
+                                    type: number
+                                    format: float
+              example:
+                   '{"apiVersion":"1.1.0","requestId":1687515890,"result":{"objects":[{"object":"car","confidence":0.97,"boundingBox":{"top":57.5,"left":182.81,"width":533.66,"height":247.86}},{"object":"car","confidence":0.35,"boundingBox":{"top":0.0,"left":0.0,"width":0.0,"height":0.0}}]}}'
+                    
+        '400':
+          description: Bad Request - Invalid image data or Image is not received
+        '406':
+          description: >-
+            Not Acceptable - The requested representation is not acceptable to
+            the client
+        '415':
+          description: >-
+            Unsupported Media Type - The request entity has a media type which
+            the server or resource does not support
+        '429':
+          description: >-
+            Too Many Requests - The user has sent too many requests in a given
+            amount of time
+  /v1/estimatepose:
+    post:
+      summary: >-
+        Estimate pose in the given image.
+      requestBody:
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+              maxLength: 1048576
+            example: ''
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    apiVersion: 
+                      type: string
+                    requestId: 
+                      type: integer
+                      format: int32
+                    result: 
+                      type: object
+                      properties: 
+                        poses: 
+                          type: array
+                          items: 
+                            type: object
+                            properties: 
+                              points: 
+                                type: array
+                                items: 
+                                  type: object
+                                  properties: 
+                                    x: 
+                                      type: integer
+                                      format: int32
+                                    y: 
+                                      type: integer
+                                      format: int32
+                                    confidence: 
+                                      type: number
+                                      format: float
+              example:
+                   '{"apiVersion":"1.1.0","requestId":1687516005,"result":{"poses":[{"points":[{"x":495.0,"y":52.0,"confidence":0.86},{"x":483.0,"y":46.0,"confidence":0.84},{"x":471.0,"y":52.0,"confidence":0.91},{"x":507.0,"y":46.0,"confidence":0.38},{"x":447.0,"y":69.0,"confidence":0.84},{"x":435.0,"y":127.0,"confidence":0.61},{"x":435.0,"y":127.0,"confidence":0.73},{"x":398.0,"y":237.0,"confidence":0.39},{"x":398.0,"y":231.0,"confidence":0.75},{"x":398.0,"y":289.0,"confidence":0.5},{"x":374.0,"y":300.0,"confidence":0.84},{"x":290.0,"y":260.0,"confidence":0.29},{"x":290.0,"y":265.0,"confidence":0.4},{"x":241.0,"y":242.0,"confidence":0.39},{"x":241.0,"y":271.0,"confidence":0.49},{"x":157.0,"y":237.0,"confidence":0.37},{"x":120.0,"y":254.0,"confidence":0.53}]}]}}'
+                    
+        '400':
+          description: Bad Request - Invalid image data or Image is not received
+        '406':
+          description: >-
+            Not Acceptable - The requested representation is not acceptable to
+            the client
+        '415':
+          description: >-
+            Unsupported Media Type - The request entity has a media type which
+            the server or resource does not support
+        '429':
+          description: >-
+            Too Many Requests - The user has sent too many requests in a given
+            amount of time
+  /v1/classifyimage:
+    post:
+      summary: >-
+        Classify the image into 1000 classes.
+      requestBody:
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+              maxLength: 1048576
+            example: ''
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    apiVersion: 
+                      type: string
+                    requestId: 
+                      type: integer
+                      format: int32
+                    result: 
+                      type: object
+                      properties: 
+                        classes: 
+                          type: array
+                          items: 
+                            type: object
+                            properties: 
+                              class: 
+                                type: string
+                              confidence: 
+                                type: number
+                                format: float
+              example: '{"apiVersion":"1.1.0","requestId":1687516373,"result":{"classes":[{"class":"tabby,tabby-cat","confidence":0.7},{"class":"tiger-cat","confidence":0.15},{"class":"Egyptian-cat","confidence":0.14}]}}'
+                    
+        '400':
+          description: Bad Request - Invalid image data or Image is not received.
+        '406':
+          description: >-
+            Not Acceptable - The requested representation is not acceptable to
+            the client.
+        '415':
+          description: >-
+            Unsupported Media Type - The request entity has a media type which
+            the server or resource does not support.
+        '429':
+          description: >-
+            Too Many Requests - The user has sent too many requests in a given
+            amount of time.
+  /v1/face2embedding:
+    post:
+      summary: >-
+        Detect faces and get embeddings for each face in the given image.
+      requestBody:
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+              maxLength: 1048576
+            example: ''
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    apiVersion: 
+                      type: string
+                    requestId: 
+                      type: integer
+                      format: int32
+                    result: 
+                      type: object
+                      properties: 
+                        faces: 
+                          type: array
+                          items: 
+                            type: object
+                            properties: 
+                              confidence: 
+                                type: number
+                                format: float
+                              boundingBox: 
+                                type: object
+                                properties: 
+                                  top: 
+                                    type: number
+                                    format: float
+                                  left: 
+                                    type: number
+                                    format: float
+                                  width: 
+                                    type: number
+                                    format: float
+                                  height: 
+                                    type: number
+                                    format: float
+                              landmarks: 
+                                type: array
+                                items: 
+                                  type: object
+                                  properties: 
+                                    type: 
+                                      type: string
+                                    x: 
+                                      type: number
+                                      format: float
+                                    y: 
+                                      type: number
+                                      format: float
+                              embeddings: 
+                                type: array
+                                items: 
+                                  type: number
+                                  format: float
+              example: '{"apiVersion":"1.1.0","requestId":1687516620,"result":{"faces":[{"confidence":0.99,"boundingBox":{"top":75.46,"left":59.01,"width":96.16,"height":141.24},"landmarks":[{"type":"pupilLeft","x":100.53,"y":114.02},{"type":"pupilRight","x":100.53,"y":114.02},{"type":"noseTip","x":100.53,"y":114.02},{"type":"mouthLeft","x":100.53,"y":114.02},{"type":"mouthRight","x":100.53,"y":114.02}],"embeddings":[-0.02,-0.02,-0.0,-0.06,0.02,-0.02,-0.0,-0.03,-0.0,-0.0,0.0,0.01,0.01,-0.06,0.0,0.0,0.02,0.01,0.02,-0.05,0.0,0.03,-0.03,0.01,0.02,0.0,0.02,0.02,0.02,0.0,0.01,0.01,0.01,-0.01,0.06,-0.0,-0.01,0.0,0.03,-0.01,0.0,0.03,-0.0,0.03,-0.01,-0.05,0.0,-0.06,0.01,0.02,-0.07,0.02,0.01,-0.05,0.01,0.04,0.03,-0.0,-0.01,-0.07,0.0,-0.02,-0.04,0.03,0.0,0.07,0.01,0.01,-0.0,-0.02,0.0,-0.02,0.02,-0.05,0.01,-0.02,-0.04,-0.0,-0.02,-0.03,0.0,0.01,-0.01,0.05,0.05,0.0,0.01,-0.0,-0.07,0.07,0.01,0.02,-0.05,-0.03,0.02,0.01,-0.03,-0.03,-0.01,-0.03,-0.03,0.03,0.01,-0.05,0.01,0.01,0.0,0.02,0.01,-0.06,0.0,0.01,0.04,0.05,0.02,0.03,0.01,0.02,0.05,0.04,0.03,-0.0,0.03,0.0,0.04,-0.07,0.02,-0.02]}]}}'
+                    
+        '400':
+          description: Bad Request - Invalid image data or Image is not received.
+        '406':
+          description: >-
+            Not Acceptable - The requested representation is not acceptable to
+            the client.
+        '415':
+          description: >-
+            Unsupported Media Type - The request entity has a media type which
+            the server or resource does not support.
+        '429':
+          description: >-
+            Too Many Requests - The user has sent too many requests in a given
+            amount of time.
+  /v1/compareface:
+    post:
+      summary: >-
+        Compare 2 given faces (embeddings) and output the similarity between them.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                face1: 
+                  type: object
+                  properties: 
+                    embeddings: 
+                      type: array
+                      items: 
+                        type: number
+                        format: float
+                face2: 
+                  type: object
+                  properties: 
+                    embeddings: 
+                      type: array
+                      items: 
+                        type: number
+                        format: float
+            example: '{"face1": {"embeddings": [-0.02, -0.02, -0.0, -0.06, 0.02, -0.02, -0.0, -0.03, -0.0, -0.0, 0.0, 0.01, 0.01, -0.06, 0.0, 0.0, 0.02, 0.01, 0.02, -0.05, 0.0, 0.03, -0.03, 0.01, 0.02, 0.0, 0.02, 0.02, 0.02, 0.0, 0.01, 0.01, 0.01, -0.01, 0.06, -0.0, -0.01, 0.0, 0.03, -0.01, 0.0, 0.03, -0.0, 0.03, -0.01, -0.05, 0.0, -0.06, 0.01, 0.02, -0.07, 0.02, 0.01, -0.05, 0.01, 0.04, 0.03, -0.0, -0.01, -0.07, 0.0, -0.02, -0.04, 0.03, 0.0, 0.07, 0.01, 0.01, -0.0, -0.02, 0.0, -0.02, 0.02, -0.05, 0.01, -0.02, -0.04, -0.0, -0.02, -0.03, 0.0, 0.01, -0.01, 0.05, 0.05, 0.0, 0.01, -0.0, -0.07, 0.07, 0.01, 0.02, -0.05, -0.03, 0.02, 0.01, -0.03, -0.03, -0.01, -0.03, -0.03, 0.03, 0.01, -0.05, 0.01, 0.01, 0.0, 0.02, 0.01, -0.06, 0.0, 0.01, 0.04, 0.05, 0.02, 0.03, 0.01, 0.02, 0.05, 0.04, 0.03, -0.0, 0.03, 0.0, 0.04, -0.07, 0.02, -0.02]},"face2": {"embeddings": [-0.02, -0.02, -0.0, -0.06, 0.02, -0.02, -0.0, -0.03, -0.0, -0.0, 0.0, 0.01, 0.01, -0.06, 0.0, 0.0, 0.02, 0.01, 0.02, -0.05, 0.0, 0.03, -0.03, 0.01, 0.02, 0.0, 0.02, 0.02, 0.02, 0.0, 0.01, 0.01, 0.01, -0.01, 0.06, -0.0, -0.01, 0.0, 0.03, -0.01, 0.0, 0.03, -0.0, 0.03, -0.01, -0.05, 0.0, -0.06, 0.01, 0.02, -0.07, 0.02, 0.01, -0.05, 0.01, 0.04, 0.03, -0.0, -0.01, -0.07, 0.0, -0.02, -0.04, 0.03, 0.0, 0.07, 0.01, 0.01, -0.0, -0.02, 0.0, -0.02, 0.02, -0.05, 0.01, -0.02, -0.04, -0.0, -0.02, -0.03, 0.0, 0.01, -0.01, 0.05, 0.05, 0.0, 0.01, -0.0, -0.07, 0.07, 0.01, 0.02, -0.05, -0.03, 0.02, 0.01, -0.03, -0.03, -0.01, -0.03, -0.03, 0.03, 0.01, -0.05, 0.01, 0.01, 0.0, 0.02, 0.01, -0.06, 0.0, 0.01, 0.04, 0.05, 0.02, 0.03, 0.01, 0.02, 0.05, 0.04, 0.03, -0.0, 0.03, 0.0, 0.04, -0.07, 0.02, -0.02]}}'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: 
+                  type: object
+                  properties:
+                    apiVersion: 
+                      type: string
+                    requestId: 
+                      type: integer
+                      format: int32
+                    result: 
+                      type: object
+                      properties: 
+                        confidence: 
+                          type: number
+                          format: float
+              example: 
+                   '{"apiVersion":"1.1.0","requestId":1687516805,"result":{"confidence":0.11}}'
+                    
+        '400':
+          description: Bad Request - Invalid image data or Image is not received.
+        '406':
+          description: >-
+            Not Acceptable - The requested representation is not acceptable to
+            the client.
+        '415':
+          description: >-
+            Unsupported Media Type - The request entity has a media type which
+            the server or resource does not support.
+        '429':
+          description: >-
+            Too Many Requests - The user has sent too many requests in a given
+            amount of time.
+externalDocs:
+  url: >-
+    https://brainypi.com
+
