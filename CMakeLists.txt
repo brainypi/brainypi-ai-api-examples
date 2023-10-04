@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpistache")
 
 find_package(PkgConfig)
 pkg_check_modules(Pistache REQUIRED IMPORTED_TARGET libpistache)
-pkg_check_modules(Pistache REQUIRED IMPORTED_TARGET RapidJSON)
+pkg_check_modules(RapidJSON REQUIRED IMPORTED_TARGET RapidJSON)
 
 
 find_package(OpenCV REQUIRED)
